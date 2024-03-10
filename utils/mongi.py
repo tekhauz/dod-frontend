@@ -13,7 +13,7 @@ class MongoHandler:
         return self.collection.find_one(query)
     
     def get_con_count(self):
-        num_contracts_values = self.collection.distinct("num_contracts")
+        num_contracts_values = self.db["metrics"].distinct("num_contracts")
         return num_contracts_values
 
     def update_document(self, query, update):
