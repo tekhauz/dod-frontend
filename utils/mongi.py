@@ -12,6 +12,10 @@ class MongoHandler:
     def find_document(self, query):
         return self.collection.find_one(query)
     
+    def get_con_count(self):
+        num_contracts_values = self.collection.distinct("num_contracts")
+        return num_contracts_values
+
     def update_document(self, query, update):
         return self.collection.update_one(query, {"$set": update})
     
