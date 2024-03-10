@@ -7,7 +7,7 @@ from dash import html
 from dash.dependencies import Input, Output
 from dash.exceptions import PreventUpdate
 
-from pages import home, weight, update, heatmap  # Import the home and weights pages
+from pages import contracts, home, update, heatmap  # Import the home and weights pages
 from pymongo import MongoClient
 
 # Initialize the Dash app with Bootstrap styles
@@ -17,7 +17,7 @@ server = app.server
 home_layout = home.home_layout
 
 # Define the layout for the weights page
-weights_layout = weight.create_weights_page(app)  # Call the function without arguments
+contracts_layout = contracts.create_contracts_page(app)  # Call the function without arguments
 
 # Define the layout for the update page
 update_layout = update.create_update_page(app)
@@ -29,16 +29,16 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             dbc.DropdownMenu(
-                label="Navigate",
+                label="Browse",
                 children=[
                     dbc.DropdownMenuItem("Home", href="/"),
-                    dbc.DropdownMenuItem("Weight", href="/weight"),
+                    dbc.DropdownMenuItem("contracts", href="/contracts"),
                     dbc.DropdownMenuItem("Update", href="/update"), 
                     dbc.DropdownMenuItem("heat map", href="/heatmap"), 
                 ],
             ),
             html.Div(id="page-content")
-        ], width={"size": 6, "offset": 3}),
+        ], width={"size": 12, "offset": 0}),
     ]),
 ])
 
@@ -48,8 +48,8 @@ app.layout = dbc.Container([
     [Input("url", "pathname")]
 )
 def display_page(pathname):
-    if pathname == "/weight":
-        return weights_layout  # Display the weights page
+    if pathname == "/contracts":
+        return contracts_layout  # Display the weights page
     elif pathname == "/update":
         return update_layout  # Display the update page
     elif pathname == "/heatmap":
