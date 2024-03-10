@@ -25,7 +25,6 @@ def create_contracts_page(app):
 
 
 
-
     weights_layout = html.Div([
 
 
@@ -36,31 +35,31 @@ def create_contracts_page(app):
 
 
         html.Br(),
-        dcc.Graph(
-            id="weights-chart2",
-            config={"displayModeBar": False},
-            figure={
-                "data": [
-                    go.Scatter(
-                        x=df["date"],
-                        y=df["contract_id"],
-                        mode="lines",
-                        marker={"color": "blue"},
-                    )
-                ],
-                "layout": go.Layout(
-                    title="Weight Data",
-                    xaxis={"title": "Date"},
-                    yaxis={"title": "Weight"},
-                ),
-            },
-            style={"width": "80%", "position": "absolute", "left": "10%","top": "50%"},
-        ),
-        dcc.Interval(
-            id="graph-interval",
-            interval=10 * 1000,  # Refresh every 60 seconds (adjust as needed)
-            n_intervals=0,
-        ),
+        # dcc.Graph(
+        #     id="weights-chart2",
+        #     config={"displayModeBar": False},
+        #     figure={
+        #         "data": [
+        #             go.Scatter(
+        #                 x=df["date"],
+        #                 y=df["contracts"],
+        #                 mode="lines",
+        #                 marker={"color": "blue"},
+        #             )
+        #         ],
+        #         "layout": go.Layout(
+        #             title="Weight Data",
+        #             xaxis={"title": "Date"},
+        #             yaxis={"title": "Weight"},
+        #         ),
+        #     },
+        #     style={"width": "80%", "position": "absolute", "left": "10%","top": "50%"},
+        # ),
+        # dcc.Interval(
+        #     id="graph-interval",
+        #     interval=10 * 1000,  # Refresh every 60 seconds (adjust as needed)
+        #     n_intervals=0,
+        # ),
 
     ])
     @app.callback(
@@ -106,7 +105,7 @@ def create_contracts_page(app):
             df = pd.DataFrame(mongo_data)
 
 
-            return f"You searched for: {df['contract_id']}"
+            return f"You searched for: {df['contracts']}"
 
 
 
