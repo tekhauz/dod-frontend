@@ -12,6 +12,9 @@ mongodb_connection_string = os.getenv("MONGODB_CONNECTION_STRING")
 mongo_client = mongi.MongoHandler(mongodb_connection_string)
 mongo_client.count_documents()
 
+
+con_num = mongo_client.get_con_count()
+
 # Create sample data for the graph
 x_values = [1, 2, 3, 4, 5]
 y_values = [10, 20, 15, 25, 30]
@@ -77,14 +80,14 @@ dcc.Graph(
                 figure={
                     'data': [
                         go.Scatter(
-                            x=x_values,
+                            x=con_num,
                             y=y_values,
                             mode='lines+markers',
                             name='Sample Data'
                         )
                     ],
                     'layout': go.Layout(
-                        title='Finance Graph',
+                        title=f'Total Contracts: {con_num}',
                         xaxis={'title': 'X-axis'},
                         yaxis={'title': 'Y-axis'},
                         height=400,
