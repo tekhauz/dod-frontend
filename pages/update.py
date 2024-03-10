@@ -21,7 +21,7 @@ df = pd.read_csv("data/weights.csv")
 
 # Define the layout for the update page
 update_layout = html.Div([
-    html.H1("Update Weight"),
+    html.H1("Update Contracts"),
     dcc.Input(id="weight-input", type="number", placeholder="Enter weight (int or float)"),
     html.Button("Submit", id="submit-button"),
     html.Div(id="update-status"),
@@ -30,24 +30,24 @@ update_layout = html.Div([
 # Define a callback to update the CSV file
 def update_csv(weight_value):
     mongo_client = MongoClient(mongodb_connection_string)
-    db = mongo_client["gym"]
-    collection = db["weight"]
+    db = mongo_client["fpds"]
+    collection = db["contracts"]
 
     global df  # Declare df as a global variable
     try:
         weight = float(weight_value)
         today_date = datetime.now().strftime("%Y-%m-%d")
-        new_data = pd.DataFrame({"date": [today_date], "weights": [weight]})
+        new_data = pd.DataFrame({"date": [today_date], "contract_id": [weight]})
         
         # Update CSV
         df = pd.concat([df, new_data], ignore_index=True)
         df.to_csv("data/weights.csv", index=False)
 
         # Update MongoDB
-        data_to_insert = {"date": today_date, "weight": weight}
+        data_to_insert = {"date": today_date, "contract_id": weight}
         collection.insert_one(data_to_insert)
         
-        return f"Weight {weight} added successfully on {today_date}."
+        return f"Contract {weight} added successfully on {today_date}."
     except ValueError:
         return "Invalid input. Please enter a valid number."
 
